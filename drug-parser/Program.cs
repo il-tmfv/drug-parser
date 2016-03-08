@@ -10,6 +10,10 @@ namespace drug_parser
     {
         static void Main(string[] args)
         {
+            Parser parser = new Parser();
+            parser.Parse();
+            Console.WriteLine("Начали анализ страницы");
+            Console.ReadKey();
         }
     }
 }
