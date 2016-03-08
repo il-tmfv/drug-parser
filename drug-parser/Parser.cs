@@ -27,6 +27,22 @@ namespace drug_parser
             return filteredLinks;
         }
 
+        async private Task ParseDrug(string address)
+        {
+            var document = await BrowsingContext.New(_config).OpenAsync(address);
+            var selector = "div.article__item_header";
+            var articlesHeaders = document.QuerySelectorAll(selector);
+            selector = "div.article__item_text";
+            var articlesTexts = document.QuerySelectorAll(selector);
+
+            foreach (var header in articlesHeaders)
+            {
+                if (header.HasChildNodes)
+                    if (header.FirstChild.HasChildNodes)
+                        Console.WriteLine("    "  + header.FirstChild.FirstChild.NodeValue);
+            }
+        }
+
         async private Task ParseCategory(string categoryLink)
         {
             var links = await GetLinksByClass(categoryLink, "entry__link");
@@ -34,7 +50,7 @@ namespace drug_parser
             foreach (var link in links)
             {
                 Console.WriteLine("  " + link);
-                //await ParseCategory(_baseAddress + link);
+                await ParseDrug(_baseAddress + link);
             }
         }
 
