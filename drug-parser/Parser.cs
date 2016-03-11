@@ -18,13 +18,12 @@ namespace drug_parser
             _config = Configuration.Default.WithDefaultLoader();
         }
 
-        async private Task<IEnumerable<string>> GetLinksByClass(string address, string aClass)
+        async private Task<IEnumerable<AngleSharp.Dom.IElement>> GetLinksByClass(string address, string aClass)
         {
             var document = await BrowsingContext.New(_config).OpenAsync(address);
             var selector = "a." + aClass;
-            var links = document.QuerySelectorAll(selector);
-            var filteredLinks = links.Select(m => m.GetAttribute("href")).Where(m => m.Contains("/drug/"));
-            return filteredLinks;
+            var links = document.QuerySelectorAll(selector).Where(m => m.GetAttribute("href").Contains("/drug/"));
+            return links;
         }
 
         async private Task ParseDrug(string address)
@@ -53,8 +52,8 @@ namespace drug_parser
 
             foreach (var link in links)
             {
-                Console.WriteLine("  " + link);
-                await ParseDrug(_baseAddress + link);
+                Console.WriteLine("  " + link.FirstChild.NodeValue);
+                await ParseDrug(_baseAddress + link.GetAttribute("href"));
             }
         }
 
@@ -64,8 +63,8 @@ namespace drug_parser
 
             foreach (var link in links)
             {
-                Console.WriteLine(link);
-                await ParseCategory(_baseAddress + link);
+                Console.WriteLine(link.FirstChild.FirstChild.NodeValue);
+                await ParseCategory(_baseAddress + link.GetAttribute("href"));
             }
         }
     }
