@@ -35,11 +35,15 @@ namespace drug_parser
             selector = "div.article__item_text";
             var articlesTexts = document.QuerySelectorAll(selector);
 
-            foreach (var header in articlesHeaders)
+            int length = new int[] {articlesHeaders.Length, articlesTexts.Length}.Min();
+
+            for (int i = 0; i < length; i++)
             {
-                if (header.HasChildNodes)
-                    if (header.FirstChild.HasChildNodes)
-                        Console.WriteLine("    "  + header.FirstChild.FirstChild.NodeValue);
+                if (articlesHeaders[i].HasChildNodes)
+                    if (articlesHeaders[i].FirstChild.HasChildNodes)
+                        Console.WriteLine("    " + articlesHeaders[i].FirstChild.FirstChild.NodeValue);
+                if (articlesTexts[i].HasChildNodes)
+                    Console.WriteLine("    " + articlesTexts[i].InnerHtml);
             }
         }
 
