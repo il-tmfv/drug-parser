@@ -10,11 +10,10 @@ namespace drug_parser
     {
         static void Main(string[] args)
         {
-            //DbManager db = new DbManager();
-            //db.Open();
-            Parser parser = new Parser();
+            DbManager db = new DbManager();
+            Parser parser = new Parser(db);
             parser.Parse();
-            Console.WriteLine("Начали анализ страницы");
+            //Console.WriteLine("Начали анализ страницы");
             Console.ReadKey();
         }
     }

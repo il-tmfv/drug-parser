@@ -12,6 +12,8 @@ namespace drug_parser
 {
     public class DbManager
     {
+        private ISession _session;
+        
         public DbManager()
         {
 
@@ -19,15 +21,21 @@ namespace drug_parser
 
         public ISession Open()
         {
-            return CreateSessionFactory().OpenSession();
+            _session = CreateSessionFactory().OpenSession();
+            return _session;
+        }
+
+        public void SaveAndUpdate(object obj)
+        {
+            _session.SaveOrUpdate(obj);
         }
 
         private ISessionFactory CreateSessionFactory()
         {
-            ISessionFactory session = null;
+            ISessionFactory sessionFactory = null;
             try
             {
-                session = Fluently.Configure().
+                sessionFactory = Fluently.Configure().
                     Database(SQLiteConfiguration.Standard.UsingFile("drugs.db")).
                     Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>()).
                     ExposeConfiguration(cfg => new SchemaUpdate(cfg).Execute(false, true)).
@@ -37,7 +45,7 @@ namespace drug_parser
             {
                 Console.WriteLine(e.ToString());
             }
-            return session;
+            return sessionFactory;
         }
     }
 }

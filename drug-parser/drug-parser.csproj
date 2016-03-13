@@ -71,11 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbManager.cs" />
-    <Compile Include="Enities\Article.cs" />
     <Compile Include="Enities\ArticleText.cs" />
     <Compile Include="Enities\Category.cs" />
     <Compile Include="Enities\Drug.cs" />
-    <Compile Include="Mappings\ArticleMap.cs" />
     <Compile Include="Mappings\ArticleTextMap.cs" />
     <Compile Include="Mappings\CategoryMap.cs" />
     <Compile Include="Mappings\DrugMap.cs" />

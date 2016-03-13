@@ -13,8 +13,8 @@ namespace drug_parser.Mappings
         public ArticleTextMap()
         {
             Id(x => x.Id);
+            Map(x => x.Title);
             Map(x => x.Text);
-            References(x => x.Article);
             References(x => x.Drug);
         }
     }
